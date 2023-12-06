@@ -1,29 +1,26 @@
-name: Automated Testing
+name: Node.js CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - master
+    branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
-        python-version: 3.8
+        node-version: '16'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: npm install
 
     - name: Run tests
-      run: |
-        python -m unittest discover
+      run: npm test
